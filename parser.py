@@ -58,3 +58,13 @@ def parse_whatsapp_chat(content: str) -> List[ChatMessage]:
 def extract_members(messages: List[ChatMessage]) -> Set[str]:
     """Return unique sender names."""
     return {m.sender for m in messages if m.sender}
+
+def read_chat_file(filepath: str) -> str:
+    """Read WhatsApp export with encoding fallback (utf-8 -> latin-1)."""
+    for enc in ("utf-8", "utf-8-sig", "latin-1"):
+        try:
+            with open(filepath, "r", encoding=enc, errors="replace") as f:
+                return f.read()
+        except OSError:
+            raise
+    raise UnicodeDecodeError("Could not decode file")
