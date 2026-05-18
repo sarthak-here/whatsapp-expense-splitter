@@ -90,3 +90,18 @@ def extract_expenses(messages: List[ChatMessage], members: Set[str]) -> List[Exp
                 description=_describe(text), participants=list(members), timestamp=msg.timestamp))
             break
     return expenses
+
+# Hinglish verb patterns - added after testing on real chats
+_HINGLISH_PAT = re.compile(
+    r"\b(?:maine|humne|mene)\b.{0,20}(?:diya|diye|pay|de diya|bheja)\b", re.I)
+
+_NE_DIYE_PAT = re.compile(r"\b(\w+)\s+ne\b.{0,20}(?:diye|diya|bheja|pay)\b", re.I)
+
+def extract_hinglish_payer(text: str, sender: str, members: Set[str]) -> Optional[str]:
+    """Try Hinglish patterns; return payer name or None."""
+    if _HINGLISH_PAT.search(text):
+        return sender
+    m = _NE_DIYE_PAT.search(text)
+    if m:
+        return _fuzzy(m.group(1), members) or sender
+    return None
