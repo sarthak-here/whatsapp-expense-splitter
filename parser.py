@@ -87,3 +87,10 @@ def get_date_range(messages: List[ChatMessage]):
     if not dated:
         return None, None
     return min(dated), max(dated)
+
+def messages_by_sender(messages: List[ChatMessage]) -> dict:
+    """Group messages by sender: {name: [ChatMessage, ...]}."""
+    result: dict = {}
+    for msg in messages:
+        result.setdefault(msg.sender, []).append(msg)
+    return result
