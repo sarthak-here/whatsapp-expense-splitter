@@ -109,3 +109,10 @@ def extract_hinglish_payer(text: str, sender: str, members: Set[str]) -> Optiona
 def filter_by_members(expenses: List[Expense], keep: Set[str]) -> List[Expense]:
     """Return only expenses paid by someone in the keep set."""
     return [e for e in expenses if e.payer in keep]
+
+def normalize_amount(text: str) -> str:
+    \"\"\"Normalize shorthand amounts: 2k -> 2000, remove commas.\"\"\"
+    text = text.replace(",", "")
+    def expand_k(m):
+        return str(int(float(m.group(1)) * 1000))
+    return re.sub(r"(\d+(?:\.\d+)?)k\b", expand_k, text, flags=re.I)
