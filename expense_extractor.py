@@ -116,3 +116,8 @@ def normalize_amount(text: str) -> str:
     def expand_k(m):
         return str(int(float(m.group(1)) * 1000))
     return re.sub(r"(\d+(?:\.\d+)?)k\b", expand_k, text, flags=re.I)
+
+# Extended false-positive filter for casual chat
+_EXT_BLACKLIST = re.compile(
+    r"\b(check karo|kitna hai|calculate|btao|batao|joke|haha|lol|"
+    r"kuch nahi|nothing|aaj nahi|baad mein|next time)\b", re.I)
