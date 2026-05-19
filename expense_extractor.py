@@ -105,3 +105,7 @@ def extract_hinglish_payer(text: str, sender: str, members: Set[str]) -> Optiona
     if m:
         return _fuzzy(m.group(1), members) or sender
     return None
+
+def filter_by_members(expenses: List[Expense], keep: Set[str]) -> List[Expense]:
+    """Return only expenses paid by someone in the keep set."""
+    return [e for e in expenses if e.payer in keep]
