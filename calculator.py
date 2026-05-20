@@ -52,3 +52,10 @@ def settlement_summary(settlements: List[Settlement]) -> dict:
         "transactions": len(settlements),
         "total_money_moved": round(sum(s.amount for s in settlements), 2),
     }
+
+def validate_balances(balances: Dict[str, float]) -> bool:
+    """Sanity check: sum of all balances must be ~zero."""
+    total = sum(balances.values())
+    if abs(total) > 1.0:
+        raise ValueError(f"Balance sheet error: net={total:.2f}. Check for duplicate expenses.")
+    return True
