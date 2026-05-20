@@ -45,3 +45,10 @@ def simplify_debts(balances: Dict[str, float]) -> List[Settlement]:
 
 def full_settlement_pipeline(expenses: List[Expense]) -> List[Settlement]:
     return simplify_debts(compute_balances(expenses))
+
+def settlement_summary(settlements: List[Settlement]) -> dict:
+    """Return transaction count and total money moved."""
+    return {
+        "transactions": len(settlements),
+        "total_money_moved": round(sum(s.amount for s in settlements), 2),
+    }
