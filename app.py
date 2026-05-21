@@ -47,3 +47,25 @@ c2.metric("Members", len(members))
 c3.metric("Expenses Found", len(expenses))
 c4.metric("Per Head", format_inr(total / len(members) if members else 0))
 st.divider()
+
+tab1, tab2, tab3 = st.tabs(["Settle Up", "Expenses", "Balances"])
+
+with tab1:
+    balances    = compute_balances(expenses)
+    settlements = simplify_debts(balances)
+    if not settlements:
+        st.success("Everyone is settled up!")
+    for s in settlements:
+        st.markdown(f"**{s.debtor}** owes **{s.creditor}** — {format_inr(s.amount)}")
+        st.divider()
+
+with tab2:
+    rows = [{"Payer": e.payer, "Amount (INR)": e.amount, "Description": e.description,
+             "Per Head": e.per_head()} for e in expenses]
+    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
+with tab3:
+    rows = [{"Member": p, "Balance": b,
+             "Status": "Gets back" if b > 0 else ("Owes" if b < 0 else "Settled")}
+            for p, b in sorted(compute_balances(expenses).items(), key=lambda x: -x[1])]
+    st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
