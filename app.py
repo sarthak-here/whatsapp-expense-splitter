@@ -69,3 +69,14 @@ with tab3:
              "Status": "Gets back" if b > 0 else ("Owes" if b < 0 else "Settled")}
             for p, b in sorted(compute_balances(expenses).items(), key=lambda x: -x[1])]
     st.dataframe(pd.DataFrame(rows), use_container_width=True, hide_index=True)
+
+with st.sidebar:
+    st.divider()
+    st.subheader("UPI IDs (optional)")
+    st.caption("Enter UPI IDs to generate pay links")
+    if expenses:
+        top = max(expenses, key=lambda e: e.amount)
+        st.divider()
+        st.metric("Biggest Expense", format_inr(top.amount), f"by {top.payer}")
+    st.divider()
+    st.caption("Tip: more descriptive messages = better detection")
