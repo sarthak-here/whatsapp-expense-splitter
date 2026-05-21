@@ -39,3 +39,11 @@ expenses = extract_expenses(messages, members)
 
 st.title("💸 Expense Splitter")
 st.caption(f"{len(messages):,} messages | {len(members)} members | {len(expenses)} expenses detected")
+
+c1, c2, c3, c4 = st.columns(4)
+total = sum(e.amount for e in expenses)
+c1.metric("Total Spent", format_inr(total))
+c2.metric("Members", len(members))
+c3.metric("Expenses Found", len(expenses))
+c4.metric("Per Head", format_inr(total / len(members) if members else 0))
+st.divider()
