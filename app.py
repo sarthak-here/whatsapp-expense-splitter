@@ -80,3 +80,10 @@ with st.sidebar:
         st.metric("Biggest Expense", format_inr(top.amount), f"by {top.payer}")
     st.divider()
     st.caption("Tip: more descriptive messages = better detection")
+
+def avatar(name: str) -> str:
+    """Return 1-2 char initials."""
+    parts = name.strip().split()
+    if len(parts) >= 2:
+        return (parts[0][0] + parts[-1][0]).upper()
+    return name[:2].upper() if name else "??"
