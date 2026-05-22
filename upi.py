@@ -38,3 +38,13 @@ def format_upi_message(debtor: str, creditor: str, amount: float) -> str:
 def validate_vpa(vpa: str) -> bool:
     \"\"\"Check if a UPI VPA is in valid format (localpart@provider).\"\"\"
     return bool(re.match(r"^[\w.\-+]+@[\w]+$", vpa.strip()))
+
+KNOWN_UPI_HANDLES = [
+    "@ybl",        # PhonePe
+    "@oksbi",      # GPay SBI
+    "@okhdfcbank", # GPay HDFC
+    "@paytm",      # Paytm
+    "@ibl",        # ICICI
+    "@upi",        # BHIM
+    "@apl",        # Amazon Pay
+]
