@@ -34,3 +34,7 @@ def format_upi_message(debtor: str, creditor: str, amount: float) -> str:
     """Generate a WhatsApp-ready payment request message."""
     return (f"Hey {creditor}! Sending you {format_inr(amount)} "
             f"for the group expenses. Please share your UPI ID.")
+
+def validate_vpa(vpa: str) -> bool:
+    \"\"\"Check if a UPI VPA is in valid format (localpart@provider).\"\"\"
+    return bool(re.match(r"^[\w.\-+]+@[\w]+$", vpa.strip()))
