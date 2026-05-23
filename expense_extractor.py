@@ -121,3 +121,17 @@ def normalize_amount(text: str) -> str:
 _EXT_BLACKLIST = re.compile(
     r"\b(check karo|kitna hai|calculate|btao|batao|joke|haha|lol|"
     r"kuch nahi|nothing|aaj nahi|baad mein|next time)\b", re.I)
+
+def deduplicate_expenses(expenses: List[Expense], tolerance_sec: int = 30) -> List[Expense]:
+    """Remove near-duplicate expenses (same payer + amount within tolerance window)."""
+    seen, unique = [], []
+    for exp in expenses:
+        dup = False
+        for s in seen:
+            if (s.payer, s.amount) == (exp.payer, exp.amount):
+                if exp.timestamp and s.timestamp:
+                    if abs((exp.timestamp - s.timestamp).total_seconds()) <= tolerance_sec:
+                        dup = True; break
+        if not dup:
+            unique.append(exp); seen.append(exp)
+    return unique
