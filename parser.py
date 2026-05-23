@@ -94,3 +94,10 @@ def messages_by_sender(messages: List[ChatMessage]) -> dict:
     for msg in messages:
         result.setdefault(msg.sender, []).append(msg)
     return result
+
+def count_messages_per_sender(messages: List[ChatMessage]) -> dict:
+    """Return {sender: count} sorted by count descending."""
+    counts: dict = {}
+    for msg in messages:
+        counts[msg.sender] = counts.get(msg.sender, 0) + 1
+    return dict(sorted(counts.items(), key=lambda x: -x[1]))
