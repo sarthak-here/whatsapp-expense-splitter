@@ -112,3 +112,10 @@ if expenses:
         fig = px.pie(values=list(payer_totals.values()), names=list(payer_totals.keys()),
                      title="Who Paid How Much?", hole=0.4)
         st.plotly_chart(fig, use_container_width=True)
+
+if expenses:
+    csv_rows = [{"Payer": e.payer, "Amount": e.amount, "Description": e.description,
+                 "Per Head": e.per_head()} for e in expenses]
+    buf = io.StringIO()
+    pd.DataFrame(csv_rows).to_csv(buf, index=False)
+    st.download_button("Download CSV", buf.getvalue(), "expenses.csv", "text/csv")
