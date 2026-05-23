@@ -21,3 +21,29 @@ This fixes that retroactively - export the chat, upload it, done.
 pip install -r requirements.txt
 streamlit run app.py
 ```
+
+## How to Export WhatsApp Chat
+
+**Android:** Open group -> Three dots -> More -> Export Chat -> Without Media
+
+**iOS:** Open group -> Group name -> Export Chat -> Without Media
+
+## Detected Patterns
+
+| Type | Example |
+|------|---------|
+| English | "I paid 500 for dinner" |
+| Hinglish | "petrol ka 800 maine diya" |
+| Third-person | "Rahul ne 350 diye" |
+| Context noun | "zomato 650" |
+
+## Project Structure
+
+```
+app.py                  Streamlit UI
+parser.py               WhatsApp .txt parser
+expense_extractor.py    Regex-based expense detector
+calculator.py           Debt simplification algorithm
+upi.py                  UPI deeplink + QR generator
+sample_chat.txt         Sample Goa trip demo
+```
