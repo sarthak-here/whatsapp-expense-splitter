@@ -103,3 +103,12 @@ def guess_category(desc: str) -> str:
         if any(k in d for k in kws):
             return cat
     return "misc"
+
+if expenses:
+    with st.expander("📊 Spending Charts", expanded=True):
+        payer_totals = {}
+        for e in expenses:
+            payer_totals[e.payer] = payer_totals.get(e.payer, 0) + e.amount
+        fig = px.pie(values=list(payer_totals.values()), names=list(payer_totals.keys()),
+                     title="Who Paid How Much?", hole=0.4)
+        st.plotly_chart(fig, use_container_width=True)
