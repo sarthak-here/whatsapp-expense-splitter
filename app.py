@@ -87,3 +87,19 @@ def avatar(name: str) -> str:
     if len(parts) >= 2:
         return (parts[0][0] + parts[-1][0]).upper()
     return name[:2].upper() if name else "??"
+
+import plotly.express as px
+
+_CATEGORY_MAP = {
+    "food":   ["dinner","lunch","breakfast","food","zomato","swiggy","snacks","chai"],
+    "travel": ["cab","ola","uber","auto","petrol","ticket","train","flight"],
+    "stay":   ["hotel","oyo","stay","room"],
+    "fun":    ["movie","booze","drinks","party","beach"],
+}
+
+def guess_category(desc: str) -> str:
+    d = desc.lower()
+    for cat, kws in _CATEGORY_MAP.items():
+        if any(k in d for k in kws):
+            return cat
+    return "misc"
