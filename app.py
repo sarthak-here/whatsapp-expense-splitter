@@ -130,3 +130,13 @@ def settlement_share_text(settlements) -> str:
 if expenses:
     with st.expander("Copy settlement for WhatsApp"):
         st.code(settlement_share_text(simplify_debts(compute_balances(expenses))), language=None)
+
+from calculator import top_spender as _top_spender
+if expenses:
+    mvp = _top_spender(expenses)
+    mvp_total = sum(e.amount for e in expenses if e.payer == mvp)
+    with st.sidebar:
+        st.divider()
+        st.metric("Top Spender", mvp, format_inr(mvp_total))
+
+st.caption("Built with Streamlit. No API. No data leaves your machine.")
