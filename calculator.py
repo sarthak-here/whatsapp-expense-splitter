@@ -59,3 +59,10 @@ def validate_balances(balances: Dict[str, float]) -> bool:
     if abs(total) > 1.0:
         raise ValueError(f"Balance sheet error: net={total:.2f}. Check for duplicate expenses.")
     return True
+
+def top_spender(expenses: List[Expense]) -> str:
+    """Return the name of the person who paid the most."""
+    totals: dict = {}
+    for e in expenses:
+        totals[e.payer] = totals.get(e.payer, 0) + e.amount
+    return max(totals, key=lambda k: totals[k]) if totals else "N/A"
