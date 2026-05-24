@@ -119,3 +119,14 @@ if expenses:
     buf = io.StringIO()
     pd.DataFrame(csv_rows).to_csv(buf, index=False)
     st.download_button("Download CSV", buf.getvalue(), "expenses.csv", "text/csv")
+
+def settlement_share_text(settlements) -> str:
+    lines = ["*Group Expense Settlement*", ""]
+    for s in settlements:
+        lines.append(f"- {s.debtor} -> {s.creditor}: {format_inr(s.amount)}")
+    lines += ["", "_via WhatsApp Expense Splitter_"]
+    return "\n".join(lines)
+
+if expenses:
+    with st.expander("Copy settlement for WhatsApp"):
+        st.code(settlement_share_text(simplify_debts(compute_balances(expenses))), language=None)
