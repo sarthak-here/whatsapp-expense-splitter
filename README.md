@@ -47,3 +47,18 @@ calculator.py           Debt simplification algorithm
 upi.py                  UPI deeplink + QR generator
 sample_chat.txt         Sample Goa trip demo
 ```
+
+## Contributing
+
+PRs welcome! Potential improvements:
+- Partial split detection ("only Rahul and me for this")
+- PDF/HTML settlement export
+- Telegram group support
+- Multi-currency (USD, EUR)
+
+## License
+
+MIT
+
+---
+*Built because every trip ends in a 'bhai kitna diya?' moment.*
